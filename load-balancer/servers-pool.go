@@ -1,7 +1,6 @@
 package loadbalancer
 
 import (
-	"log"
 	"net/url"
 	"sync/atomic"
 )
@@ -47,17 +46,4 @@ func (s *ServersPool) GetNextPeer() *Server {
 		}
 	}
 	return nil
-}
-
-// HealthCheck pings the backends and update the status
-func (sp *ServersPool) HealthCheck() {
-	for _, s := range sp.servers {
-		status := "up"
-		alive := s.isServisAlive()
-		s.SetAlive(alive)
-		if !alive {
-			status = "down"
-		}
-		log.Printf("%s [%s]\n", s.URL, status)
-	}
 }
